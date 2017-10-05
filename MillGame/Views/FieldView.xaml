@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="MillGame.Views.FieldView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MillGame.Views"
+             xmlns:viewModels="clr-namespace:MillGame.ViewModels"
+             mc:Ignorable="d" d:DataContext="{d:DesignData viewModels:FieldViewModel}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse Fill="{TemplateBinding Background}"
+                             Stroke="{TemplateBinding BorderBrush}"/>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Button Grid.Column="0" Grid.Row="0" Command="{Binding GameActionCommand}"/>
+    </Grid>
+</UserControl>

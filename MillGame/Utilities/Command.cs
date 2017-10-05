@@ -9,16 +9,53 @@ namespace MillGame.Utilities
 {
     public class Command : ICommand
     {
-        public event EventHandler CanExecuteChanged;
+        private Action<object> execute;
+        private Predicate<object> canExecute;
+        private event EventHandler CanExecuteChangedInternal;
+
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                CommandManager.RequerySuggested += value;
+                this.CanExecuteChangedInternal += value;
+            }
+
+            remove
+            {
+                CommandManager.RequerySuggested -= value;
+                this.CanExecuteChangedInternal -= value;
+            }
+        }
+
+        public Command(Action<object> execute)
+            : this(execute, o => true) { }
+
+        public Command(Action<object> execute, Predicate<object> canExecute)
+        {
+            this.execute = execute ?? throw new ArgumentNullException("execute");
+            this.canExecute = canExecute ?? throw new ArgumentNullException("canExecute");
+        }
 
         public bool CanExecute(object parameter)
         {
-            throw new NotImplementedException();
+            return canExecute != null && canExecute(parameter);
         }
 
         public void Execute(object parameter)
         {
-            throw new NotImplementedException();
+            execute(parameter);
+        }
+
+        public void OnCanExecuteChanged()
+        {
+            CanExecuteChangedInternal?.Invoke(this, new EventArgs());
+        }
+
+        public void Destroy()
+        {
+            canExecute = _ => false;
+            execute = _ => { return; };
         }
     }
 }
