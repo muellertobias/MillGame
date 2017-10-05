@@ -10,7 +10,8 @@ namespace MillGame.Models
     public class Field
     {
         private Mill _board;
-        public FieldState CurrentState { get; set; }
+        public bool IsCorner { get { return Neighbors.Count == 2; } }
+        public FieldState CurrentState { get; set; } // TODO Notify ViewModel!
         public List<Field> Neighbors { get; private set; }
 
         public Field(Mill board)

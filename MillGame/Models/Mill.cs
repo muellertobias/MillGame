@@ -15,14 +15,18 @@ namespace MillGame.Models
 
         public Player Player1 { get; private set; }
         public Player Player2 { get; private set; }
+
+        // TODO das muss schöner gehen
         public Player CurrentPlayer { get; private set; }
+        public Player CurrentEnemy { get; private set; }
 
         public Mill()
         {
             currentPhase = new SettingPhase();
-            Player1 = new Player() { Name = "Alice", Color = FieldState.Player1 };
-            Player2 = new Player() { Name = "Bob", Color = FieldState.Player2 };
+            Player1 = new Player("Alice", FieldState.Player1);
+            Player2 = new Player("Bob", FieldState.Player2);
             CurrentPlayer = Player1;
+            CurrentEnemy = Player2;
 
             Fields = new Dictionary<int, Field>();
             for (int i = 0; i < 24; i++)
@@ -34,7 +38,8 @@ namespace MillGame.Models
 
         public void Move(Field activeField)
         {
-            if (currentPhase.Move(CurrentPlayer, activeField))
+            
+            if (currentPhase.Move(activeField, CurrentPlayer, Fields.Values.ToList()))
             {
                 currentPhase = currentPhase.NextPhase();
                 SetNextPlayer(currentPhase.IsMoveFinished());
@@ -48,10 +53,12 @@ namespace MillGame.Models
                 if (CurrentPlayer == Player1)
                 {
                     CurrentPlayer = Player2;
+                    CurrentEnemy = Player1;
                 }
                 else
                 {
                     CurrentPlayer = Player1;
+                    CurrentEnemy = Player2;
                 }
             }
         }
@@ -94,7 +101,7 @@ namespace MillGame.Models
 
         abstract class GamePhase
         {
-            public abstract bool Move(Player currentPlayer, Field currentField);
+            public abstract bool Move(Field currentField, Player player, List<Field> fields);
 
             public abstract bool IsMoveFinished();
             public abstract GamePhase NextPhase();
@@ -124,12 +131,13 @@ namespace MillGame.Models
                 return this;
             }
 
-            public override bool Move(Player currentPlayer, Field currentField)
+            public override bool Move(Field currentField, Player currentPlayer, List<Field> fields)
             {
                 if (currentField.CurrentState == FieldState.Empty)
                 {
                     Counter++;
                     currentField.CurrentState = currentPlayer.Color;
+                    currentPlayer.ControlledFields.Add(currentField);
                     return true;
                 }
                 return false;
@@ -138,21 +146,131 @@ namespace MillGame.Models
 
         class MovePhase : GamePhase
         {
+            private GamePhase subPhase;
+
+            public MovePhase()
+            {
+                subPhase = new SelectionPhase();
+            }
+
             public override bool IsMoveFinished()
             {
-                throw new NotImplementedException();
+                return subPhase.IsMoveFinished();
             }
 
             public override GamePhase NextPhase()
             {
-                throw new NotImplementedException();
+                subPhase = subPhase.NextPhase();
+                return this;
+
+                // kriterium zum wechsel zu EndPhase => p1.Fields == 3 || p2.Fields == 3
             }
 
-            public override bool Move(Player currentPlayer, Field currentField)
+            public override bool Move(Field currentField, Player currentPlayer, List<Field> fields)
             {
-                throw new NotImplementedException();
+                return subPhase.Move(currentField, currentPlayer, fields);
+            }
+
+            class SelectionPhase : GamePhase
+            {
+                private Field selectedField;
+
+                public override bool IsMoveFinished()
+                {
+                    return false;
+                }
+
+                public override bool Move(Field currentField, Player player, List<Field> fields)
+                {
+                    if (currentField.CurrentState == player.Color)
+                    {
+                        selectedField = currentField;
+                        return true;
+                    }
+                    return false;
+                }
+
+                public override GamePhase NextPhase()
+                {
+                    if (selectedField != null)
+                    {
+                        return new ConquerPhase(selectedField);
+                    }
+
+                    return this;
+                }
+            }
+
+            class ConquerPhase : GamePhase
+            {
+                private Field selectedField;
+                private bool millBuilded;
+                public ConquerPhase(Field selectedField)
+                {
+                    this.selectedField = selectedField;
+                    millBuilded = false;
+                }
+
+                public override bool IsMoveFinished()
+                {
+                    return !millBuilded && selectedField.CurrentState == FieldState.Empty;
+                }
+
+                public override bool Move(Field currentField, Player player, List<Field> fields)
+                {
+                    if (currentField.CurrentState == FieldState.Empty)
+                    {
+                        player.ControlledFields.Remove(selectedField);
+                        player.ControlledFields.Add(currentField);
+                        selectedField.CurrentState = FieldState.Empty;
+                        currentField.CurrentState = player.Color;
+
+                        // Prüfe hier auf Mühlen!
+
+                        return true;
+                    }
+                    return false;
+                }
+
+                public override GamePhase NextPhase()
+                {
+                    if (selectedField.CurrentState != FieldState.Empty)
+                    {
+                        return this;
+                    }
+                    else
+                    {
+                        if (millBuilded)
+                        {
+                            return new EliminationPhase();
+                        }
+                        else
+                        {
+                            return new SelectionPhase();
+                        }
+                    }
+                }
+            }
+
+            class EliminationPhase : GamePhase
+            {
+                public override bool IsMoveFinished()
+                {
+                    throw new NotImplementedException();
+                }
+
+                public override bool Move(Field currentField, Player player, List<Field> fields)
+                {
+                    throw new NotImplementedException();
+                }
+
+                public override GamePhase NextPhase()
+                {
+                    throw new NotImplementedException();
+                }
             }
         }
+
         class EndPhase : GamePhase
         {
             public override bool IsMoveFinished()
@@ -165,7 +283,7 @@ namespace MillGame.Models
                 throw new NotImplementedException();
             }
 
-            public override bool Move(Player currentPlayer, Field currentField)
+            public override bool Move(Field currentField, Player currentPlayer, List<Field> fields)
             {
                 throw new NotImplementedException();
             }
