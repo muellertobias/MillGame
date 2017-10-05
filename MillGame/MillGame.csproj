@@ -55,6 +55,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Field.cs" />
+    <Compile Include="Models\GamePhases\EndPhase.cs" />
+    <Compile Include="Models\GamePhases\GamePhase.cs" />
+    <Compile Include="Models\GamePhases\MovePhase.cs" />
+    <Compile Include="Models\GamePhases\SettingPhase.cs" />
     <Compile Include="Models\INotifyStateChanged.cs" />
     <Compile Include="Models\Mill.cs" />
     <Compile Include="Models\Player.cs" />
