@@ -56,7 +56,8 @@
     </ApplicationDefinition>
     <Compile Include="Models\Field.cs" />
     <Compile Include="Models\Mill.cs" />
-    <Compile Include="Utilities\Command.cs" />
+    <Compile Include="Utilities\MVVM\Command.cs" />
+    <Compile Include="Utilities\FieldState.cs" />
     <Compile Include="ViewModels\FieldViewModel.cs" />
     <Compile Include="ViewModels\MillViewModel.cs" />
     <Compile Include="Views\FieldView.xaml.cs">

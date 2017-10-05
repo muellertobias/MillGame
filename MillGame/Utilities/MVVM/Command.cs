@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace MillGame.Utilities
+namespace MillGame.Utilities.MVVM
 {
     public class Command : ICommand
     {

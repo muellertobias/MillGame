@@ -5,25 +5,35 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MillGame.Views"
              xmlns:viewModels="clr-namespace:MillGame.ViewModels"
+             xmlns:utilities="clr-namespace:MillGame.Utilities"
              mc:Ignorable="d" d:DataContext="{d:DesignData viewModels:FieldViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Grid>
-                            <Ellipse Fill="{TemplateBinding Background}"
-                             Stroke="{TemplateBinding BorderBrush}"/>
-                            <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
     <Grid>
-        <Button Grid.Column="0" Grid.Row="0" Command="{Binding GameActionCommand}"/>
+        <Button Grid.Column="0" Grid.Row="0" Command="{Binding GameActionCommand}">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <Ellipse Fill="{TemplateBinding Background}"
+                             Stroke="{TemplateBinding BorderBrush}"/>
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CurrentState}" Value="{x:Static utilities:FieldState.Player1}">
+                            <Setter Property="Background" Value="DarkRed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding CurrentState}" Value="{x:Static utilities:FieldState.Player2}">
+                            <Setter Property="Background" Value="DarkBlue"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 </UserControl>

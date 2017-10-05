@@ -1,5 +1,6 @@
 ﻿using MillGame.Models;
 using MillGame.Utilities;
+using MillGame.Utilities.MVVM;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,25 +13,25 @@ namespace MillGame.ViewModels
 {
     public class FieldViewModel : INotifyPropertyChanged
     {
-        public Field Model { get; private set; }
+        public FieldState CurrentState
+        {
+            get { return _model.CurrentState; }
+        }
+
+        private Field _model;
 
         public ICommand GameActionCommand { get; private set; }
 
-        public FieldViewModel()
+        public FieldViewModel(Field model)
         {
-            Model = new Field();
-            GameActionCommand = new Command(GameAction);
+            _model = model;
+            GameActionCommand = new Command(o => GameAction());
         }
 
-        // Müssen 32 Verweise sein, da eine Mühle 32 Kanten besitzt!
-        public void AddNeighbor(FieldViewModel neighbor)
+        private void GameAction()
         {
-            Model.AddNeighbor(neighbor.Model);
-        }
-
-        private void GameAction(object parameter)
-        {
-
+            _model.Move();
+            OnPropertyChanged("CurrentState");
         }
 
         #region INotifyPropertyChanged

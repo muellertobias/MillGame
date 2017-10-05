@@ -63,7 +63,7 @@
         <ContentControl Content="{Binding FieldViewModels[15], Mode=TwoWay}" Grid.Column="2" Grid.Row="4"/>
         <ContentControl Content="{Binding FieldViewModels[7], Mode=TwoWay}" Grid.Column="3" Grid.Row="2"/>
         <ContentControl Content="{Binding FieldViewModels[8], Mode=TwoWay}" Grid.Column="4" Grid.Row="2"/>
-        <ContentControl Content="{Binding FieldViewModels[13], Mode=TwoWay}" Grid.Column="4" Grid.Row="3"/>
+        <ContentControl Content="{Binding FieldViewModels[12], Mode=TwoWay}" Grid.Column="4" Grid.Row="3"/>
         <ContentControl Content="{Binding FieldViewModels[17], Mode=TwoWay}" Grid.Column="4" Grid.Row="4"/>
         <ContentControl Content="{Binding FieldViewModels[16], Mode=TwoWay}" Grid.Column="3" Grid.Row="4"/>
         <!--End Inner Ring-->
