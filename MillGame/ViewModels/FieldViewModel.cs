@@ -25,13 +25,18 @@ namespace MillGame.ViewModels
         public FieldViewModel(Field model)
         {
             _model = model;
+            _model.StateChanged += _model_StateChanged;
             GameActionCommand = new Command(o => GameAction());
+        }
+
+        private void _model_StateChanged(object sender, StateChangedEventArgs e)
+        {
+            OnPropertyChanged("CurrentState");
         }
 
         private void GameAction()
         {
             _model.Move();
-            OnPropertyChanged("CurrentState");
         }
 
         #region INotifyPropertyChanged

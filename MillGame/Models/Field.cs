@@ -7,11 +7,28 @@ using System.Threading.Tasks;
 
 namespace MillGame.Models
 {
-    public class Field
+    public class Field : INotifyStateChanged
     {
         private Mill _board;
+
+        public event StateChangedEventHandler StateChanged;
+
         public bool IsCorner { get { return Neighbors.Count == 2; } }
-        public FieldState CurrentState { get; set; } // TODO Notify ViewModel!
+
+        private FieldState _currentState;
+        public FieldState CurrentState
+        {
+            get { return _currentState; }
+            set
+            {
+                if (_currentState != value)
+                {
+                    _currentState = value;
+                    OnStateChanged();
+                }
+            }
+        }
+
         public List<Field> Neighbors { get; private set; }
 
         public Field(Mill board)
@@ -33,5 +50,11 @@ namespace MillGame.Models
         {
             _board.Move(this);
         }
+
+        private void OnStateChanged()
+        {
+            StateChanged?.Invoke(this, new StateChangedEventArgs());
+        }
+
     }
 }

@@ -41,8 +41,8 @@ namespace MillGame.Models
             
             if (currentPhase.Move(activeField, CurrentPlayer, Fields.Values.ToList()))
             {
-                currentPhase = currentPhase.NextPhase();
                 SetNextPlayer(currentPhase.IsMoveFinished());
+                currentPhase = currentPhase.NextPhase();
             }
         }
 
@@ -218,7 +218,7 @@ namespace MillGame.Models
 
                 public override bool Move(Field currentField, Player player, List<Field> fields)
                 {
-                    if (currentField.CurrentState == FieldState.Empty)
+                    if (currentField.CurrentState == FieldState.Empty && selectedField.Neighbors.Contains(currentField))
                     {
                         player.ControlledFields.Remove(selectedField);
                         player.ControlledFields.Add(currentField);

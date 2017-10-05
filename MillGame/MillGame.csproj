@@ -55,6 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Field.cs" />
+    <Compile Include="Models\INotifyStateChanged.cs" />
     <Compile Include="Models\Mill.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Utilities\MVVM\Command.cs" />
