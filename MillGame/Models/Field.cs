@@ -10,7 +10,7 @@ namespace MillGame.Models
     public class Field
     {
         private Mill _board;
-        public FieldState CurrentState { get; private set; }
+        public FieldState CurrentState { get; set; }
         public List<Field> Neighbors { get; private set; }
 
         public Field(Mill board)
@@ -30,7 +30,7 @@ namespace MillGame.Models
         }
         public void Move()
         {
-            CurrentState = _board.Move(this);
+            _board.Move(this);
         }
     }
 }

@@ -9,10 +9,21 @@ namespace MillGame.Models
 {
     public class Mill
     {
+        private GamePhase currentPhase;
+
         public Dictionary<int, Field> Fields { get; private set; }
+
+        public Player Player1 { get; private set; }
+        public Player Player2 { get; private set; }
+        public Player CurrentPlayer { get; private set; }
 
         public Mill()
         {
+            currentPhase = new SettingPhase();
+            Player1 = new Player() { Name = "Alice", Color = FieldState.Player1 };
+            Player2 = new Player() { Name = "Bob", Color = FieldState.Player2 };
+            CurrentPlayer = Player1;
+
             Fields = new Dictionary<int, Field>();
             for (int i = 0; i < 24; i++)
             {
@@ -21,16 +32,28 @@ namespace MillGame.Models
             SetupNeighborhoods();
         }
 
-        public FieldState Move(Field activeField)
+        public void Move(Field activeField)
         {
-            if (activeField.CurrentState == FieldState.Empty) 
-                return FieldState.Player1;
-            if (activeField.CurrentState == FieldState.Player1)
-                return FieldState.Player2;
-            if (activeField.CurrentState == FieldState.Player2)
-                return FieldState.Empty;
+            if (currentPhase.Move(CurrentPlayer, activeField))
+            {
+                currentPhase = currentPhase.NextPhase();
+                SetNextPlayer(currentPhase.IsMoveFinished());
+            }
+        }
 
-            throw new Exception();
+        private void SetNextPlayer(bool moveFinished)
+        {
+            if (moveFinished) // TODO Statemachine für die Spieler
+            {
+                if (CurrentPlayer == Player1)
+                {
+                    CurrentPlayer = Player2;
+                }
+                else
+                {
+                    CurrentPlayer = Player1;
+                }
+            }
         }
 
         private void SetupNeighborhoods()
@@ -67,6 +90,85 @@ namespace MillGame.Models
             Fields[19].AddNeighbor(Fields[22]);
             Fields[21].AddNeighbor(Fields[22]);
             Fields[22].AddNeighbor(Fields[23]);
+        }
+
+        abstract class GamePhase
+        {
+            public abstract bool Move(Player currentPlayer, Field currentField);
+
+            public abstract bool IsMoveFinished();
+            public abstract GamePhase NextPhase();
+        }
+
+        class SettingPhase : GamePhase
+        {
+            private int Counter;
+            private const int MAX_Counter = 18;
+
+            public SettingPhase()
+            {
+                Counter = 0;
+            }
+
+            public override bool IsMoveFinished()
+            {
+                return true;
+            }
+
+            public override GamePhase NextPhase()
+            {
+                if (Counter >= MAX_Counter)
+                {
+                    return new MovePhase();
+                }
+                return this;
+            }
+
+            public override bool Move(Player currentPlayer, Field currentField)
+            {
+                if (currentField.CurrentState == FieldState.Empty)
+                {
+                    Counter++;
+                    currentField.CurrentState = currentPlayer.Color;
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        class MovePhase : GamePhase
+        {
+            public override bool IsMoveFinished()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override GamePhase NextPhase()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override bool Move(Player currentPlayer, Field currentField)
+            {
+                throw new NotImplementedException();
+            }
+        }
+        class EndPhase : GamePhase
+        {
+            public override bool IsMoveFinished()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override GamePhase NextPhase()
+            {
+                throw new NotImplementedException();
+            }
+
+            public override bool Move(Player currentPlayer, Field currentField)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
