@@ -13,6 +13,8 @@ namespace MillGame.Models.GamePhases
         private int Counter;
         private const int MAX_Counter = 18;
 
+        public override string Name => "Set";
+
         public SettingPhase()
         {
             Counter = 0;
@@ -32,13 +34,14 @@ namespace MillGame.Models.GamePhases
             return this;
         }
 
-        public override bool Move(Field currentField, Player currentPlayer, List<Field> fields)
+        public override bool Move(Field currentField, Player player, Player enemy)
         {
             if (currentField.CurrentState == FieldState.Empty)
             {
                 Counter++;
-                currentField.CurrentState = currentPlayer.Color;
-                currentPlayer.ControlledFields.Add(currentField);
+                currentField.CurrentState = player.Color;
+                player.Conquer(null, currentField);
+                //player.ControlledFields.Add(currentField);
                 return true;
             }
             return false;

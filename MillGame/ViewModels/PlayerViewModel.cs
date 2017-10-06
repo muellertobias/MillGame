@@ -40,6 +40,7 @@ namespace MillGame.ViewModels
         public PlayerViewModel(Player model)
         {
             this._model = model;
+            _model.StateChanged += (s, e) => FieldCount = _model.ControlledFields.Count;
         }
     }
 }

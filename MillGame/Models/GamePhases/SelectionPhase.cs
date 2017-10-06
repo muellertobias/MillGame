@@ -1,4 +1,5 @@
 ﻿using MillGame.Models.Players;
+using MillGame.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,17 @@ namespace MillGame.Models.GamePhases
     {
         private Field selectedField;
 
+        public override string Name => "Select";
+
         public override bool NextPlayer()
         {
             return false;
         }
 
-        public override bool Move(Field currentField, Player player, List<Field> fields)
+        public override bool Move(Field currentField, Player player, Player enemy)
         {
-            if (currentField.CurrentState == player.Color)
+            if (currentField.CurrentState == player.Color 
+                && (player.ControlledFields.Count <= 3 || currentField.Neighbors.Exists(f => f.CurrentState == FieldState.Empty)))
             {
                 selectedField = currentField;
                 return true;

@@ -8,26 +8,28 @@
              xmlns:local="clr-namespace:MillGame.Views"
              mc:Ignorable="d" d:DataContext="{d:DesignData viewModels:PlayerViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Grid.Style>
+    <Border BorderThickness="5">
+        <Border.Style>
             <Style TargetType="Border">
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding CurrentPlayer.Color}" Value="{x:Static utilities:FieldState.Red}">
-                        <Setter Property="Background" Value="DarkRed"/>
+                    <DataTrigger Binding="{Binding Color}" Value="{x:Static utilities:FieldState.Red}">
+                        <Setter Property="BorderBrush" Value="DarkRed"/>
                     </DataTrigger>
-                    <DataTrigger Binding="{Binding  CurrentPlayer.Color}" Value="{x:Static utilities:FieldState.Blue}">
-                        <Setter Property="Background" Value="DarkBlue"/>
+                    <DataTrigger Binding="{Binding  Color}" Value="{x:Static utilities:FieldState.Blue}">
+                        <Setter Property="BorderBrush" Value="DarkBlue"/>
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
-        </Grid.Style>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="{Binding Name}"/>
-        <TextBlock Text="Anzahl Steine:" Grid.Row="1"/>
-        <TextBlock Text="{Binding FieldCount}" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    </Grid>
+        </Border.Style>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="{Binding Name}"/>
+            <TextBlock Text="Anzahl Steine:" Grid.Row="1"/>
+            <TextBlock Text="{Binding FieldCount}" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+    </Border>
 </UserControl>

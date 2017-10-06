@@ -6,66 +6,77 @@
              xmlns:viewModels="clr-namespace:MillGame.ViewModels"
              xmlns:local="clr-namespace:MillGame.Views"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MillViewModel}"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.DataContext>
-        <viewModels:MillViewModel/>
-    </UserControl.DataContext>
+             d:DesignHeight="600" d:DesignWidth="400">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type viewModels:FieldViewModel}">
-            <local:FieldView/>
+            <local:FieldView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:GameStatusViewModel}">
+            <local:GameStatusView />
         </DataTemplate>
     </UserControl.Resources>
+    <UserControl.DataContext>
+        <viewModels:MillViewModel />
+    </UserControl.DataContext>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-        <!--Begin Outer Ring-->
-        <ContentControl Content="{Binding FieldViewModels[0], Mode=TwoWay}" Grid.Column="0" Grid.Row="0"/>
-        <ContentControl Content="{Binding FieldViewModels[9], Mode=TwoWay}" Grid.Column="0" Grid.Row="3"/>
-        <ContentControl Content="{Binding FieldViewModels[21], Mode=TwoWay}" Grid.Column="0" Grid.Row="6"/>
-        <ContentControl Content="{Binding FieldViewModels[1], Mode=TwoWay}" Grid.Column="3" Grid.Row="0"/>
-        <ContentControl Content="{Binding FieldViewModels[2], Mode=TwoWay}"  Grid.Column="6" Grid.Row="0"/>
-        <ContentControl Content="{Binding FieldViewModels[14], Mode=TwoWay}" Grid.Column="6" Grid.Row="3"/>
-        <ContentControl Content="{Binding FieldViewModels[23], Mode=TwoWay}" Grid.Column="6" Grid.Row="6"/>
-        <ContentControl Content="{Binding FieldViewModels[22], Mode=TwoWay}" Grid.Column="3" Grid.Row="6"/>
-        <!--End Outer Ring-->
+            <!--Begin Outer Ring-->
+            <ContentControl Content="{Binding FieldViewModels[0], Mode=TwoWay}" Grid.Column="0" Grid.Row="0"/>
+            <ContentControl Content="{Binding FieldViewModels[9], Mode=TwoWay}" Grid.Column="0" Grid.Row="3"/>
+            <ContentControl Content="{Binding FieldViewModels[21], Mode=TwoWay}" Grid.Column="0" Grid.Row="6"/>
+            <ContentControl Content="{Binding FieldViewModels[1], Mode=TwoWay}" Grid.Column="3" Grid.Row="0"/>
+            <ContentControl Content="{Binding FieldViewModels[2], Mode=TwoWay}"  Grid.Column="6" Grid.Row="0"/>
+            <ContentControl Content="{Binding FieldViewModels[14], Mode=TwoWay}" Grid.Column="6" Grid.Row="3"/>
+            <ContentControl Content="{Binding FieldViewModels[23], Mode=TwoWay}" Grid.Column="6" Grid.Row="6"/>
+            <ContentControl Content="{Binding FieldViewModels[22], Mode=TwoWay}" Grid.Column="3" Grid.Row="6"/>
+            <!--End Outer Ring-->
 
-        <!--Begin Middle Ring-->
-        <ContentControl Content="{Binding FieldViewModels[3], Mode=TwoWay}" Grid.Column="1" Grid.Row="1"/>
-        <ContentControl Content="{Binding FieldViewModels[10], Mode=TwoWay}" Grid.Column="1" Grid.Row="3"/>
-        <ContentControl Content="{Binding FieldViewModels[18], Mode=TwoWay}" Grid.Column="1" Grid.Row="5"/>
-        <ContentControl Content="{Binding FieldViewModels[4], Mode=TwoWay}" Grid.Column="3" Grid.Row="1"/>
-        <ContentControl Content="{Binding FieldViewModels[5], Mode=TwoWay}"  Grid.Column="5" Grid.Row="1"/>
-        <ContentControl Content="{Binding FieldViewModels[13], Mode=TwoWay}" Grid.Column="5" Grid.Row="3"/>
-        <ContentControl Content="{Binding FieldViewModels[20], Mode=TwoWay}" Grid.Column="5" Grid.Row="5"/>
-        <ContentControl Content="{Binding FieldViewModels[19], Mode=TwoWay}" Grid.Column="3" Grid.Row="5"/>
-        <!--Ende Middle Ring-->
+            <!--Begin Middle Ring-->
+            <ContentControl Content="{Binding FieldViewModels[3], Mode=TwoWay}" Grid.Column="1" Grid.Row="1"/>
+            <ContentControl Content="{Binding FieldViewModels[10], Mode=TwoWay}" Grid.Column="1" Grid.Row="3"/>
+            <ContentControl Content="{Binding FieldViewModels[18], Mode=TwoWay}" Grid.Column="1" Grid.Row="5"/>
+            <ContentControl Content="{Binding FieldViewModels[4], Mode=TwoWay}" Grid.Column="3" Grid.Row="1"/>
+            <ContentControl Content="{Binding FieldViewModels[5], Mode=TwoWay}"  Grid.Column="5" Grid.Row="1"/>
+            <ContentControl Content="{Binding FieldViewModels[13], Mode=TwoWay}" Grid.Column="5" Grid.Row="3"/>
+            <ContentControl Content="{Binding FieldViewModels[20], Mode=TwoWay}" Grid.Column="5" Grid.Row="5"/>
+            <ContentControl Content="{Binding FieldViewModels[19], Mode=TwoWay}" Grid.Column="3" Grid.Row="5"/>
+            <!--Ende Middle Ring-->
 
-        <!--Begin Inner Ring-->
-        <ContentControl Content="{Binding FieldViewModels[6], Mode=TwoWay}"  Grid.Column="2" Grid.Row="2"/>
-        <ContentControl Content="{Binding FieldViewModels[11], Mode=TwoWay}" Grid.Column="2" Grid.Row="3" />
-        <ContentControl Content="{Binding FieldViewModels[15], Mode=TwoWay}" Grid.Column="2" Grid.Row="4"/>
-        <ContentControl Content="{Binding FieldViewModels[7], Mode=TwoWay}" Grid.Column="3" Grid.Row="2"/>
-        <ContentControl Content="{Binding FieldViewModels[8], Mode=TwoWay}" Grid.Column="4" Grid.Row="2"/>
-        <ContentControl Content="{Binding FieldViewModels[12], Mode=TwoWay}" Grid.Column="4" Grid.Row="3"/>
-        <ContentControl Content="{Binding FieldViewModels[17], Mode=TwoWay}" Grid.Column="4" Grid.Row="4"/>
-        <ContentControl Content="{Binding FieldViewModels[16], Mode=TwoWay}" Grid.Column="3" Grid.Row="4"/>
-        <!--End Inner Ring-->
+            <!--Begin Inner Ring-->
+            <ContentControl Content="{Binding FieldViewModels[6], Mode=TwoWay}"  Grid.Column="2" Grid.Row="2"/>
+            <ContentControl Content="{Binding FieldViewModels[11], Mode=TwoWay}" Grid.Column="2" Grid.Row="3" />
+            <ContentControl Content="{Binding FieldViewModels[15], Mode=TwoWay}" Grid.Column="2" Grid.Row="4"/>
+            <ContentControl Content="{Binding FieldViewModels[7], Mode=TwoWay}" Grid.Column="3" Grid.Row="2"/>
+            <ContentControl Content="{Binding FieldViewModels[8], Mode=TwoWay}" Grid.Column="4" Grid.Row="2"/>
+            <ContentControl Content="{Binding FieldViewModels[12], Mode=TwoWay}" Grid.Column="4" Grid.Row="3"/>
+            <ContentControl Content="{Binding FieldViewModels[17], Mode=TwoWay}" Grid.Column="4" Grid.Row="4"/>
+            <ContentControl Content="{Binding FieldViewModels[16], Mode=TwoWay}" Grid.Column="3" Grid.Row="4"/>
+            <!--End Inner Ring-->
+        </Grid>
+        <ContentControl Content="{Binding GameStatusViewModel}" Grid.Row="1"/>
     </Grid>
+
 </UserControl>

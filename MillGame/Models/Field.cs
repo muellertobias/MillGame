@@ -23,7 +23,6 @@ namespace MillGame.Models
             {
                 if (_currentState != value)
                 {
-                    LastState = _currentState;
                     _currentState = value;
                     OnStateChanged();
                 }
@@ -55,6 +54,11 @@ namespace MillGame.Models
         public void Move()
         {
             _board.Move(this);
+        }
+
+        public void MoveFinished(object sender, PlayersSwitchedEventArgs e)
+        {
+            LastState = CurrentState;
         }
 
         private void OnStateChanged()

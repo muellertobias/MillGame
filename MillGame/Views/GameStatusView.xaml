@@ -4,9 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:utilities="clr-namespace:MillGame.Utilities"
+             xmlns:viewModels="clr-namespace:MillGame.ViewModels"
              xmlns:local="clr-namespace:MillGame.Views"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" d:DataContext="{d:DesignData viewModels:GameStatusViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type viewModels:PlayerViewModel}">
+            <local:PlayerView />
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -22,17 +28,20 @@
             <Border.Style>
                 <Style TargetType="Border">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding CurrentPlayer.Color}" Value="{x:Static utilities:FieldState.Red}">
+                        <DataTrigger Binding="{Binding ActivePlayerColor}" Value="{x:Static utilities:FieldState.Red}">
                             <Setter Property="Background" Value="DarkRed"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding  CurrentPlayer.Color}" Value="{x:Static utilities:FieldState.Blue}">
+                        <DataTrigger Binding="{Binding  ActivePlayerColor}" Value="{x:Static utilities:FieldState.Blue}">
                             <Setter Property="Background" Value="DarkBlue"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Border.Style>
         </Border>
-        
-        <TextBlock Text="Statistiken" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+        <TextBlock Text="{Binding CurrentPhase}" Foreground="White" FontSize="15" FontWeight="Bold" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+        <ContentControl Content="{Binding PlayerViewModels[0]}" Grid.Row="2" Grid.Column="0"/>
+        <ContentControl Content="{Binding PlayerViewModels[1]}" Grid.Row="2" Grid.Column="1"/>
     </Grid>
 </UserControl>

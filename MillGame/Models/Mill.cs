@@ -16,20 +16,21 @@ namespace MillGame.Models
 
         public Dictionary<int, Field> Fields { get; private set; }
 
-        public Mill()
+        public Mill(GameStatus status)
         {
             currentPhase = new SettingPhase();
-            gameStatus = new GameStatus();
-
+            gameStatus = status;
+            gameStatus.Publish(currentPhase.Name);
             SetupFields();
         }
 
         public void Move(Field activeField)
         {
-            if (currentPhase.Move(activeField, gameStatus.CurrentPlayer, Fields.Values.ToList()))
+            if (currentPhase.Move(activeField, gameStatus.ActivePlayer, gameStatus.CurrentEnemy))
             {
                 gameStatus.NextPlayer(currentPhase.NextPlayer());
                 currentPhase = currentPhase.NextPhase();
+                gameStatus.Publish(currentPhase.Name);
             }
         }
 
@@ -39,6 +40,7 @@ namespace MillGame.Models
             for (int i = 0; i < 24; i++)
             {
                 Fields.Add(i, new Field(this));
+                gameStatus.PlayersSwitched += Fields[i].MoveFinished;
             }
 
             Fields[0].AddNeighbor(Fields[1]);

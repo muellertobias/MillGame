@@ -14,12 +14,17 @@ namespace MillGame.ViewModels
     public class MillViewModel : ViewModelBase
     {
         public Dictionary<int, FieldViewModel> FieldViewModels { get; private set; }
+        public GameStatusViewModel GameStatusViewModel { get; private set; }
 
         private Mill _model;
 
         public MillViewModel()
         {
-            _model = new Mill();
+            GameStatus status = new GameStatus();
+            GameStatusViewModel = new GameStatusViewModel(status);
+
+            _model = new Mill(status);
+
             FieldViewModels = new Dictionary<int, FieldViewModel>();
             foreach (var kvp in _model.Fields)
             {

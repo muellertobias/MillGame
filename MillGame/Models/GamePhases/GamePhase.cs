@@ -9,7 +9,8 @@ namespace MillGame.Models.GamePhases
 {
     abstract class GamePhase
     {
-        public abstract bool Move(Field currentField, Player player, List<Field> fields);
+        public abstract string Name { get; }
+        public abstract bool Move(Field currentField, Player player, Player enemy);
         public abstract bool NextPlayer();
         public abstract GamePhase NextPhase();
     }

@@ -12,6 +12,19 @@ namespace MillGame.ViewModels
 {
     public class GameStatusViewModel : ViewModelBase
     {
+        private string _currentPhase;
+        public string CurrentPhase
+        {
+            get { return _currentPhase; }
+            private set
+            {
+                if (_currentPhase != value)
+                {
+                    _currentPhase = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public List<PlayerViewModel> PlayerViewModels { get; private set; }
 
         private FieldState _activePlayerColor;
@@ -33,19 +46,16 @@ namespace MillGame.ViewModels
         public GameStatusViewModel(GameStatus model)
         {
             _model = model;
-            _model.StateChanged += _model_StateChanged;
+            _model.PlayersSwitched += (s, e) => ActivePlayerColor = e.NewPlayer.Color;
+            _model.GamePhaseChanged += (s, e) => CurrentPhase = e.Phase;
 
+            PlayerViewModels = new List<PlayerViewModel>();
             foreach (var player in _model.Players)
             {
                 PlayerViewModels.Add(new PlayerViewModel(player));
             }
 
-            ActivePlayerColor = _model.CurrentPlayer.Color;
-        }
-
-        private void _model_StateChanged(object sender, StateChangedEventArgs e)
-        {
-            ActivePlayerColor = _model.CurrentPlayer.Color;
+            ActivePlayerColor = _model.ActivePlayer.Color;
         }
     }
 }

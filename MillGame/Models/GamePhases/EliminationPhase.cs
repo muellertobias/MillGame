@@ -10,16 +10,18 @@ namespace MillGame.Models.GamePhases
 {
     class EliminationPhase : GamePhase
     {
+        public override string Name => "Eliminate";
+
         public override bool NextPlayer()
         {
             return true;
         }
 
-        public override bool Move(Field currentField, Player player, List<Field> fields)
+        public override bool Move(Field currentField, Player player, Player enemy)
         {
-            if (currentField.CurrentState != player.Color && currentField.CurrentState != FieldState.Empty)
+            if (currentField.CurrentState == enemy.Color)
             {
-                currentField.CurrentState = FieldState.Empty;
+                enemy.Lose(currentField);
                 return true;
             }
             return false;

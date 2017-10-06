@@ -5,22 +5,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MillGame.Models.GamePhases;
 
 namespace MillGame.Models
 {
-    public class GameStatus : INotifyStateChanged
+    public class GameStatus : INotifyPlayersSwitched, INotifyGamePhaseChanged
     {
-        public event StateChangedEventHandler StateChanged;
+        public event PlayersSwitchedEventHandler PlayersSwitched;
+        public event GamePhaseChangedEventHandler GamePhaseChanged;
 
         public Player[] Players { get; private set; }
 
         private int indexCurrentPlayer;
 
-        public Player CurrentPlayer
+        public Player ActivePlayer
         {
             get
             {
                 return Players[indexCurrentPlayer];
+            }
+        }
+
+        public Player CurrentEnemy
+        {
+            get
+            {
+                return Players[(indexCurrentPlayer + 1) % 2];
             }
         }
 
@@ -32,12 +42,20 @@ namespace MillGame.Models
             indexCurrentPlayer = 0;
         }
 
+        public void Publish(string currentPhase)
+        {
+            GamePhaseChanged?.Invoke(this, new GamePhaseChangedEventArgs(currentPhase));
+        }
+
         public void NextPlayer(bool moveFinished)
         {
             if (moveFinished)
             {
+                var oldPlayer = Players[indexCurrentPlayer];
                 indexCurrentPlayer = (indexCurrentPlayer + 1) % 2;
-                StateChanged?.Invoke(this, new StateChangedEventArgs());
+                var newPlayer = Players[indexCurrentPlayer];
+
+                PlayersSwitched?.Invoke(this, new PlayersSwitchedEventArgs(newPlayer, oldPlayer));
             }
         }
     }

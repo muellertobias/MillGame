@@ -13,6 +13,8 @@ namespace MillGame.Models.GamePhases
         private Field selectedField;
         private bool millBuilded;
 
+        public override string Name => "Conquer";
+
         public ConquerPhase(Field selectedField)
         {
             this.selectedField = selectedField;
@@ -29,12 +31,13 @@ namespace MillGame.Models.GamePhases
             return false;
         }
 
-        public override bool Move(Field currentField, Player player, List<Field> fields)
+        public override bool Move(Field currentField, Player player, Player enemy)
         {
-            if (currentField.CurrentState == FieldState.Empty && (selectedField.Neighbors.Contains(currentField) || player.ControlledFields.Count <= 3))
+            if (currentField.CurrentState == FieldState.Empty 
+                && (selectedField.Neighbors.Contains(currentField) || player.ControlledFields.Count <= 3))
             {
-                player.ControlledFields.Remove(selectedField);
-                player.ControlledFields.Add(currentField);
+                player.Conquer(selectedField, currentField);
+
                 selectedField.CurrentState = FieldState.Empty;
                 currentField.CurrentState = player.Color;
 
