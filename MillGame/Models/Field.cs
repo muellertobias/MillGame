@@ -23,11 +23,14 @@ namespace MillGame.Models
             {
                 if (_currentState != value)
                 {
+                    LastState = _currentState;
                     _currentState = value;
                     OnStateChanged();
                 }
             }
         }
+
+        public FieldState LastState { get; private set; }
 
         public List<Field> Neighbors { get; private set; }
 
@@ -35,6 +38,9 @@ namespace MillGame.Models
         {
             _board = board;
             Neighbors = new List<Field>();
+
+            LastState = FieldState.Empty;
+            _currentState = FieldState.Empty;
         }
 
         // Müssen 32 Verweise sein, da eine Mühle 32 Kanten besitzt!
@@ -55,6 +61,5 @@ namespace MillGame.Models
         {
             StateChanged?.Invoke(this, new StateChangedEventArgs());
         }
-
     }
 }

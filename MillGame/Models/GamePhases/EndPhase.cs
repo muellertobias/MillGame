@@ -7,21 +7,26 @@ using System.Threading.Tasks;
 
 namespace MillGame.Models.GamePhases
 {
-    class EndPhase : GamePhase
+    class EndPhase : MovePhase
     {
-        public override bool IsMoveFinished()
+        public EndPhase()
         {
-            throw new NotImplementedException();
+
+        }
+
+        public override bool NextPlayer()
+        {
+            return base.NextPlayer();
         }
 
         public override GamePhase NextPhase()
         {
-            throw new NotImplementedException();
+            return base.NextPhase();
         }
 
         public override bool Move(Field currentField, Player currentPlayer, List<Field> fields)
         {
-            throw new NotImplementedException();
+            return base.Move(currentField, currentPlayer, fields);
         }
     }
 }

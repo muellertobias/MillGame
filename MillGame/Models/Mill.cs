@@ -34,7 +34,7 @@ namespace MillGame.Models
         {
             if (currentPhase.Move(activeField, Players[indexCurrentPlayer], Fields.Values.ToList()))
             {
-                NextPlayer(currentPhase.IsMoveFinished());
+                NextPlayer(currentPhase.NextPlayer());
                 currentPhase = currentPhase.NextPhase();
             }
         }

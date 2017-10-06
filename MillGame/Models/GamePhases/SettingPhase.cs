@@ -18,7 +18,7 @@ namespace MillGame.Models.GamePhases
             Counter = 0;
         }
 
-        public override bool IsMoveFinished()
+        public override bool NextPlayer()
         {
             return true;
         }

@@ -17,9 +17,9 @@ namespace MillGame.Models.GamePhases
             subPhase = new SelectionPhase();
         }
 
-        public override bool IsMoveFinished()
+        public override bool NextPlayer()
         {
-            return subPhase.IsMoveFinished();
+            return subPhase.NextPlayer();
         }
 
         public override GamePhase NextPhase()
@@ -33,105 +33,6 @@ namespace MillGame.Models.GamePhases
         public override bool Move(Field currentField, Player currentPlayer, List<Field> fields)
         {
             return subPhase.Move(currentField, currentPlayer, fields);
-        }
-
-        class SelectionPhase : GamePhase
-        {
-            private Field selectedField;
-
-            public override bool IsMoveFinished()
-            {
-                return false;
-            }
-
-            public override bool Move(Field currentField, Player player, List<Field> fields)
-            {
-                if (currentField.CurrentState == player.Color)
-                {
-                    selectedField = currentField;
-                    return true;
-                }
-                return false;
-            }
-
-            public override GamePhase NextPhase()
-            {
-                if (selectedField != null)
-                {
-                    return new ConquerPhase(selectedField);
-                }
-
-                return this;
-            }
-        }
-
-        class ConquerPhase : GamePhase
-        {
-            private Field selectedField;
-            private bool millBuilded;
-            public ConquerPhase(Field selectedField)
-            {
-                this.selectedField = selectedField;
-                millBuilded = false;
-            }
-
-            public override bool IsMoveFinished()
-            {
-                return !millBuilded && selectedField.CurrentState == FieldState.Empty;
-            }
-
-            public override bool Move(Field currentField, Player player, List<Field> fields)
-            {
-                if (currentField.CurrentState == FieldState.Empty && selectedField.Neighbors.Contains(currentField))
-                {
-                    player.ControlledFields.Remove(selectedField);
-                    player.ControlledFields.Add(currentField);
-                    selectedField.CurrentState = FieldState.Empty;
-                    currentField.CurrentState = player.Color;
-
-                    // Prüfe hier auf Mühlen!
-
-                    return true;
-                }
-                return false;
-            }
-
-            public override GamePhase NextPhase()
-            {
-                if (selectedField.CurrentState != FieldState.Empty)
-                {
-                    return this;
-                }
-                else
-                {
-                    if (millBuilded)
-                    {
-                        return new EliminationPhase();
-                    }
-                    else
-                    {
-                        return new SelectionPhase();
-                    }
-                }
-            }
-        }
-
-        class EliminationPhase : GamePhase
-        {
-            public override bool IsMoveFinished()
-            {
-                throw new NotImplementedException();
-            }
-
-            public override bool Move(Field currentField, Player player, List<Field> fields)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override GamePhase NextPhase()
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 }
