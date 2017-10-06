@@ -11,11 +11,20 @@ using System.Windows.Input;
 
 namespace MillGame.ViewModels
 {
-    public class FieldViewModel : INotifyPropertyChanged
+    public class FieldViewModel : ViewModelBase
     {
+        private FieldState _currentState;
         public FieldState CurrentState
         {
-            get { return _model.CurrentState; }
+            get { return _currentState; }
+            private set
+            {
+                if (_currentState != value)
+                {
+                    _currentState = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         private Field _model;
@@ -31,21 +40,12 @@ namespace MillGame.ViewModels
 
         private void _model_StateChanged(object sender, StateChangedEventArgs e)
         {
-            OnPropertyChanged("CurrentState");
+            CurrentState = _model.CurrentState;
         }
 
         private void GameAction()
         {
             _model.Move();
         }
-
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion INotifyPropertyChanged
     }
 }

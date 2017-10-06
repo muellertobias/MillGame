@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MillGame.Models.Players
 {
-    public class Player
+    public class Player : INotifyStateChanged
     {
         public string Name { get; private set; }
         public FieldState Color { get; private set; }
@@ -19,5 +19,7 @@ namespace MillGame.Models.Players
             Color = color;
             ControlledFields = new List<Field>();
         }
+
+        public event StateChangedEventHandler StateChanged;
     }
 }

@@ -27,7 +27,7 @@ namespace MillGame.Models.GamePhases
         {
             if (Counter >= MAX_Counter)
             {
-                return new MovePhase();
+                return new SelectionPhase();
             }
             return this;
         }

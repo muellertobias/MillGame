@@ -62,18 +62,28 @@
     <Compile Include="Models\GamePhases\MovePhase.cs" />
     <Compile Include="Models\GamePhases\SelectionPhase.cs" />
     <Compile Include="Models\GamePhases\SettingPhase.cs" />
+    <Compile Include="Models\GameStatus.cs" />
     <Compile Include="Models\INotifyStateChanged.cs" />
     <Compile Include="Models\Mill.cs" />
     <Compile Include="Models\Player\Player.cs" />
     <Compile Include="Utilities\MVVM\Command.cs" />
     <Compile Include="Utilities\FieldState.cs" />
+    <Compile Include="Utilities\MVVM\ViewModelBase.cs" />
     <Compile Include="ViewModels\FieldViewModel.cs" />
+    <Compile Include="ViewModels\GameStatusViewModel.cs" />
     <Compile Include="ViewModels\MillViewModel.cs" />
+    <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="Views\FieldView.xaml.cs">
       <DependentUpon>FieldView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\GameStatusView.xaml.cs">
+      <DependentUpon>GameStatusView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MillView.xaml.cs">
       <DependentUpon>MillView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlayerView.xaml.cs">
+      <DependentUpon>PlayerView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -91,7 +101,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\GameStatusView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MillView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

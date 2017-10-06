@@ -1,5 +1,6 @@
 ﻿using MillGame.Models;
 using MillGame.Utilities;
+using MillGame.Utilities.MVVM;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +11,7 @@ using System.Windows.Input;
 
 namespace MillGame.ViewModels
 {
-    public class MillViewModel : INotifyPropertyChanged
+    public class MillViewModel : ViewModelBase
     {
         public Dictionary<int, FieldViewModel> FieldViewModels { get; private set; }
 
@@ -24,16 +25,6 @@ namespace MillGame.ViewModels
             {
                 FieldViewModels.Add(kvp.Key, new FieldViewModel(kvp.Value));
             }
-            
         }
-
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion INotifyPropertyChanged
     }
 }

@@ -12,6 +12,7 @@ namespace MillGame.Models.GamePhases
     {
         private GamePhase subPhase;
 
+        [Obsolete]
         public MovePhase()
         {
             subPhase = new SelectionPhase();

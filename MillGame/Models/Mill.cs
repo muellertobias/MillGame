@@ -12,38 +12,24 @@ namespace MillGame.Models
     public class Mill
     {
         private GamePhase currentPhase;
+        private GameStatus gameStatus;
 
         public Dictionary<int, Field> Fields { get; private set; }
-
-        public Player[] Players { get; private set; }
-        private int indexCurrentPlayer;
 
         public Mill()
         {
             currentPhase = new SettingPhase();
-
-            Players = new Player[2];
-            Players[0] = new Player("Alice", FieldState.Red);
-            Players[1] = new Player("Bob", FieldState.Blue);
-            indexCurrentPlayer = 0;
+            gameStatus = new GameStatus();
 
             SetupFields();
         }
 
         public void Move(Field activeField)
         {
-            if (currentPhase.Move(activeField, Players[indexCurrentPlayer], Fields.Values.ToList()))
+            if (currentPhase.Move(activeField, gameStatus.CurrentPlayer, Fields.Values.ToList()))
             {
-                NextPlayer(currentPhase.NextPlayer());
+                gameStatus.NextPlayer(currentPhase.NextPlayer());
                 currentPhase = currentPhase.NextPhase();
-            }
-        }
-
-        private void NextPlayer(bool moveFinished)
-        {
-            if (moveFinished)
-            {
-                indexCurrentPlayer = (indexCurrentPlayer + 1) % 2;
             }
         }
 

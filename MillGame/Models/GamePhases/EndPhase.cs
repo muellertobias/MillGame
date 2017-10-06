@@ -9,6 +9,7 @@ namespace MillGame.Models.GamePhases
 {
     class EndPhase : MovePhase
     {
+        [Obsolete]
         public EndPhase()
         {
 
