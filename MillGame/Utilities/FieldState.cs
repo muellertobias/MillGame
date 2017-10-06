@@ -9,7 +9,7 @@ namespace MillGame.Utilities
     public enum FieldState
     {
         Empty,
-        Player1,
-        Player2
+        Red,
+        Blue
     }
 }

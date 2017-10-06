@@ -25,10 +25,10 @@
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding CurrentState}" Value="{x:Static utilities:FieldState.Player1}">
+                        <DataTrigger Binding="{Binding CurrentState}" Value="{x:Static utilities:FieldState.Red}">
                             <Setter Property="Background" Value="DarkRed"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding CurrentState}" Value="{x:Static utilities:FieldState.Player2}">
+                        <DataTrigger Binding="{Binding CurrentState}" Value="{x:Static utilities:FieldState.Blue}">
                             <Setter Property="Background" Value="DarkBlue"/>
                         </DataTrigger>
                     </Style.Triggers>

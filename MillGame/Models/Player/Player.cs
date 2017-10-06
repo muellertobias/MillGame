@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MillGame.Models
+namespace MillGame.Models.Players
 {
     public class Player
     {

@@ -1,4 +1,5 @@
 ﻿using MillGame.Models.GamePhases;
+using MillGame.Models.Players;
 using MillGame.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,58 +15,46 @@ namespace MillGame.Models
 
         public Dictionary<int, Field> Fields { get; private set; }
 
-        public Player Player1 { get; private set; }
-        public Player Player2 { get; private set; }
-
-        // TODO das muss schöner gehen
-        public Player CurrentPlayer { get; private set; }
-        public Player CurrentEnemy { get; private set; }
+        public Player[] Players { get; private set; }
+        private int indexCurrentPlayer;
 
         public Mill()
         {
             currentPhase = new SettingPhase();
-            Player1 = new Player("Alice", FieldState.Player1);
-            Player2 = new Player("Bob", FieldState.Player2);
-            CurrentPlayer = Player1;
-            CurrentEnemy = Player2;
 
+            Players = new Player[2];
+            Players[0] = new Player("Alice", FieldState.Red);
+            Players[1] = new Player("Bob", FieldState.Blue);
+            indexCurrentPlayer = 0;
+
+            SetupFields();
+        }
+
+        public void Move(Field activeField)
+        {
+            if (currentPhase.Move(activeField, Players[indexCurrentPlayer], Fields.Values.ToList()))
+            {
+                NextPlayer(currentPhase.IsMoveFinished());
+                currentPhase = currentPhase.NextPhase();
+            }
+        }
+
+        private void NextPlayer(bool moveFinished)
+        {
+            if (moveFinished)
+            {
+                indexCurrentPlayer = (indexCurrentPlayer + 1) % 2;
+            }
+        }
+
+        private void SetupFields()
+        {
             Fields = new Dictionary<int, Field>();
             for (int i = 0; i < 24; i++)
             {
                 Fields.Add(i, new Field(this));
             }
-            SetupNeighborhoods();
-        }
 
-        public void Move(Field activeField)
-        {
-            
-            if (currentPhase.Move(activeField, CurrentPlayer, Fields.Values.ToList()))
-            {
-                SetNextPlayer(currentPhase.IsMoveFinished());
-                currentPhase = currentPhase.NextPhase();
-            }
-        }
-
-        private void SetNextPlayer(bool moveFinished)
-        {
-            if (moveFinished) // TODO Statemachine für die Spieler
-            {
-                if (CurrentPlayer == Player1)
-                {
-                    CurrentPlayer = Player2;
-                    CurrentEnemy = Player1;
-                }
-                else
-                {
-                    CurrentPlayer = Player1;
-                    CurrentEnemy = Player2;
-                }
-            }
-        }
-
-        private void SetupNeighborhoods()
-        {
             Fields[0].AddNeighbor(Fields[1]);
             Fields[0].AddNeighbor(Fields[9]);
             Fields[1].AddNeighbor(Fields[2]);

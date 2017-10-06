@@ -1,4 +1,5 @@
-﻿using MillGame.Utilities;
+﻿using MillGame.Models.Players;
+using MillGame.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -12,7 +12,6 @@ namespace MillGame.ViewModels
 {
     public class MillViewModel : INotifyPropertyChanged
     {
-        public int Test { get; set; }
         public Dictionary<int, FieldViewModel> FieldViewModels { get; private set; }
 
         private Mill _model;
