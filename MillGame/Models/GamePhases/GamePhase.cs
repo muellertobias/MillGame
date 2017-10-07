@@ -7,7 +7,7 @@ using MillGame.Models.Players;
 
 namespace MillGame.Models.GamePhases
 {
-    abstract class GamePhase
+    public abstract class GamePhase
     {
         public abstract string Name { get; }
         public abstract bool Move(Field currentField, Player player, Player enemy);

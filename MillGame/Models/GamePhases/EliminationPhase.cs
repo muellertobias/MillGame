@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 
 namespace MillGame.Models.GamePhases
 {
-    class EliminationPhase : GamePhase
+    public class EliminationPhase : GamePhase
     {
         public override string Name => "Eliminate";
+        private Player winner;
 
         public override bool NextPlayer()
         {
-            return true;
+            return winner == null;
         }
 
         public override bool Move(Field currentField, Player player, Player enemy)
@@ -22,6 +23,10 @@ namespace MillGame.Models.GamePhases
             if (currentField.CurrentState == enemy.Color)
             {
                 enemy.Lose(currentField);
+                if (enemy.HasLostGame())
+                {
+                    winner = player;
+                }
                 return true;
             }
             return false;
@@ -29,7 +34,14 @@ namespace MillGame.Models.GamePhases
 
         public override GamePhase NextPhase()
         {
-            return new SelectionPhase();
+            if (winner != null)
+            {
+                return new EndPhase(winner);
+            }
+            else
+            {
+                return new SelectionPhase();
+            }
         }
     }
 }

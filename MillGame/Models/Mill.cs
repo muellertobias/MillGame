@@ -20,7 +20,7 @@ namespace MillGame.Models
         {
             currentPhase = new SettingPhase();
             gameStatus = status;
-            gameStatus.Publish(currentPhase.Name);
+            gameStatus.Publish(currentPhase);
             SetupFields();
         }
 
@@ -30,10 +30,11 @@ namespace MillGame.Models
             {
                 gameStatus.NextPlayer(currentPhase.NextPlayer());
                 currentPhase = currentPhase.NextPhase();
-                gameStatus.Publish(currentPhase.Name);
+                gameStatus.Publish(currentPhase);
             }
         }
 
+        // Don't look at this method :-)
         private void SetupFields()
         {
             Fields = new Dictionary<int, Field>();

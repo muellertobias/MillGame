@@ -22,6 +22,11 @@ namespace MillGame.Models.Players
             ControlledFields = new List<Field>();
         }
 
+        public bool HasLostGame()
+        {
+            return HasLost();
+        }
+
         public void Conquer(Field source, Field destination)
         {
             destination.CurrentState = Color;
@@ -45,19 +50,24 @@ namespace MillGame.Models.Players
             }
         }
 
-        public bool HasLost()
+        private bool HasLost()
         {
-            if (ControlledFields.Count == 0)
+            // Not enough controlled fields?
+            if (ControlledFields.Count < 3)
             {
                 return true;
             }
+
+            // Can not move fields anymore?
             foreach (var field in ControlledFields)
             {
                 if (field.Neighbors.Exists(f => f.CurrentState == FieldState.Empty))
                 {
+                    // Can move to a neigbor field!
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -65,6 +75,5 @@ namespace MillGame.Models.Players
         {
             StateChanged?.Invoke(this, new StateChangedEventArgs());
         }
-
     }
 }

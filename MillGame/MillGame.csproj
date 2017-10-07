@@ -57,6 +57,7 @@
     <Compile Include="Models\Field.cs" />
     <Compile Include="Models\GamePhases\ConquerPhase.cs" />
     <Compile Include="Models\GamePhases\EliminationPhase.cs" />
+    <Compile Include="Models\GamePhases\EndPhase.cs" />
     <Compile Include="Models\GamePhases\GamePhase.cs" />
     <Compile Include="Models\GamePhases\SelectionPhase.cs" />
     <Compile Include="Models\GamePhases\SettingPhase.cs" />

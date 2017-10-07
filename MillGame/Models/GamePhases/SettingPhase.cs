@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace MillGame.Models.GamePhases
 {
-    class SettingPhase : GamePhase
+    public class SettingPhase : GamePhase
     {
         private int Counter;
-        private const int MAX_Counter = 18;
+        private const int MAX_Counter = 6;
 
         public override string Name => "Set";
 

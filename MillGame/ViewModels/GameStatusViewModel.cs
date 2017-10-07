@@ -47,7 +47,7 @@ namespace MillGame.ViewModels
         {
             _model = model;
             _model.PlayersSwitched += (s, e) => ActivePlayerColor = e.NewPlayer.Color;
-            _model.GamePhaseChanged += (s, e) => CurrentPhase = e.Phase;
+            _model.GamePhaseChanged += (s, e) => CurrentPhase = e.Phase.Name;
 
             PlayerViewModels = new List<PlayerViewModel>();
             foreach (var player in _model.Players)

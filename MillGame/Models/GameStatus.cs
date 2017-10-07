@@ -42,7 +42,7 @@ namespace MillGame.Models
             indexCurrentPlayer = 0;
         }
 
-        public void Publish(string currentPhase)
+        public void Publish(GamePhase currentPhase)
         {
             GamePhaseChanged?.Invoke(this, new GamePhaseChangedEventArgs(currentPhase));
         }

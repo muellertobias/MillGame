@@ -1,12 +1,13 @@
-﻿using System;
+﻿using MillGame.Models.GamePhases;
+using System;
 
 namespace MillGame.Models
 {
     public class GamePhaseChangedEventArgs : EventArgs
     {
-        public string Phase { get; private set; }
+        public GamePhase Phase { get; private set; }
 
-        public GamePhaseChangedEventArgs(string phase)
+        public GamePhaseChangedEventArgs(GamePhase phase)
         {
             Phase = phase;
         }

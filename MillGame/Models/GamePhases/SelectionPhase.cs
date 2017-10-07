@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MillGame.Models.GamePhases
 {
-    class SelectionPhase : GamePhase
+    public class SelectionPhase : GamePhase
     {
         private Field selectedField;
 
