@@ -5,15 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModels="clr-namespace:MillGame.ViewModels"
              xmlns:local="clr-namespace:MillGame.Views"
+             xmlns:converters="clr-namespace:MillGame.Utilities.Converters"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MillViewModel}"
              d:DesignHeight="600" d:DesignWidth="400">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type viewModels:FieldViewModel}">
-            <local:FieldView />
+            <local:FieldView Margin="2" />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModels:GameStatusViewModel}">
             <local:GameStatusView />
         </DataTemplate>
+        <converters:PercentageConverter x:Key="PercentageConverter"/>
+        <converters:SizeReducerConverter x:Key="SizeReducerConverter"/>
     </UserControl.Resources>
     <UserControl.DataContext>
         <viewModels:MillViewModel />
@@ -23,9 +26,9 @@
             <RowDefinition Height="4*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <Grid>
+        <Grid x:Name="grid">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
+                <ColumnDefinition x:Name="column"/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -43,8 +46,39 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
+            <Canvas Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" Grid.RowSpan="7">
+                <Rectangle Canvas.Top="{Binding ActualWidth, ElementName=contentControl, Mode=OneWay, Converter={StaticResource PercentageConverter}, ConverterParameter='0,5'}" 
+                           Canvas.Left="{Binding ActualWidth, ElementName=contentControl, Mode=OneWay, Converter={StaticResource PercentageConverter}, ConverterParameter='0,5'}"
+                           Canvas.Right="{Binding ActualWidth, ElementName=contentControl, Mode=OneWay, Converter={StaticResource PercentageConverter}, ConverterParameter='0,5'}"
+                           Canvas.Bottom="{Binding ActualWidth, ElementName=contentControl, Mode=OneWay, Converter={StaticResource PercentageConverter}, ConverterParameter='0,5'}"                           
+                           Stroke="Black" StrokeThickness="2">
+                    <Rectangle.Style>
+                        <Style TargetType="Rectangle">
+                            <Setter Property="Height">
+                                <Setter.Value>
+                                    <MultiBinding Converter="{StaticResource SizeReducerConverter}" ConverterParameter="-1">
+                                        <Binding Path="ActualHeight" ElementName="grid" Mode="OneWay"/>
+                                        <Binding Path="ActualWidth" ElementName="contentControl" Mode="OneWay"/>
+                                    </MultiBinding>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Width">
+                                <Setter.Value>
+                                    <MultiBinding Converter="{StaticResource SizeReducerConverter}" ConverterParameter="-1">
+                                        <Binding Path="ActualWidth" ElementName="grid" Mode="OneWay"/>
+                                        <Binding Path="ActualWidth" ElementName="contentControl" Mode="OneWay"/>
+                                    </MultiBinding>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+
+                
+            </Canvas>
+            
             <!--Begin Outer Ring-->
-            <ContentControl Content="{Binding FieldViewModels[0], Mode=TwoWay}" Grid.Column="0" Grid.Row="0"/>
+            <ContentControl x:Name="contentControl" Content="{Binding FieldViewModels[0], Mode=TwoWay}" Grid.Column="0" Grid.Row="0"/>
             <ContentControl Content="{Binding FieldViewModels[9], Mode=TwoWay}" Grid.Column="0" Grid.Row="3"/>
             <ContentControl Content="{Binding FieldViewModels[21], Mode=TwoWay}" Grid.Column="0" Grid.Row="6"/>
             <ContentControl Content="{Binding FieldViewModels[1], Mode=TwoWay}" Grid.Column="3" Grid.Row="0"/>
@@ -52,10 +86,11 @@
             <ContentControl Content="{Binding FieldViewModels[14], Mode=TwoWay}" Grid.Column="6" Grid.Row="3"/>
             <ContentControl Content="{Binding FieldViewModels[23], Mode=TwoWay}" Grid.Column="6" Grid.Row="6"/>
             <ContentControl Content="{Binding FieldViewModels[22], Mode=TwoWay}" Grid.Column="3" Grid.Row="6"/>
+            <!--<Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" Grid.RowSpan="7" BorderBrush="Black" BorderThickness="1" Panel.ZIndex="-1"/>-->
             <!--End Outer Ring-->
 
             <!--Begin Middle Ring-->
-            <ContentControl Content="{Binding FieldViewModels[3], Mode=TwoWay}" Grid.Column="1" Grid.Row="1"/>
+            <ContentControl x:Name="MiddleTopLeftField" Content="{Binding FieldViewModels[3], Mode=TwoWay}" Grid.Column="1" Grid.Row="1"/>
             <ContentControl Content="{Binding FieldViewModels[10], Mode=TwoWay}" Grid.Column="1" Grid.Row="3"/>
             <ContentControl Content="{Binding FieldViewModels[18], Mode=TwoWay}" Grid.Column="1" Grid.Row="5"/>
             <ContentControl Content="{Binding FieldViewModels[4], Mode=TwoWay}" Grid.Column="3" Grid.Row="1"/>

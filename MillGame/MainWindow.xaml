@@ -4,10 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:MillGame.Views"
-        xmlns:viewModels="clr-namespace:MillGame.ViewModels"
-        xmlns:local="clr-namespace:MillGame"
         mc:Ignorable="d"
-        Title="MainWindow" SizeToContent="WidthAndHeight">
+        Title="Mühle" SizeToContent="WidthAndHeight">
     <Grid>
         <views:MillView x:Name="MillView" Height="600" Width="400"/>
     </Grid>
