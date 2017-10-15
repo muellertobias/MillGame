@@ -11,7 +11,7 @@ namespace MillGame.Models.GamePhases
     public class SettingPhase : GamePhase
     {
         private int Counter;
-        private const int MAX_Counter = 6;
+        private const int MAX_Counter = 18;
 
         public override string Name => "Set";
 
@@ -41,7 +41,6 @@ namespace MillGame.Models.GamePhases
                 Counter++;
                 currentField.CurrentState = player.Color;
                 player.Conquer(null, currentField);
-                //player.ControlledFields.Add(currentField);
                 return true;
             }
             return false;
