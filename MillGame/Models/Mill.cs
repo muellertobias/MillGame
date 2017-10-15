@@ -18,6 +18,9 @@ namespace MillGame.Models
 
         public Mill(GameStatus status)
         {
+            if (status == null)
+                throw new ArgumentNullException(nameof(status));
+
             currentPhase = new SettingPhase();
             gameStatus = status;
             gameStatus.Publish(currentPhase);

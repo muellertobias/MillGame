@@ -12,6 +12,9 @@ namespace MillGame.Algorithms
     {
         public static bool FindMill(Player player)
         {
+            if (player == null)
+                throw new ArgumentNullException(nameof(player));
+
             List<Field> fields = player.ControlledFields.FindAll(f => !f.IsCorner);
 
             foreach (var field in fields)
@@ -27,6 +30,9 @@ namespace MillGame.Algorithms
 
         public static bool IsMill(Field current)
         {
+            if (current == null)
+                throw new ArgumentNullException(nameof(current));
+
             if (current.IsCorner)
                 throw new ArgumentException("Current Field darf keine Ecke sein!");
 
